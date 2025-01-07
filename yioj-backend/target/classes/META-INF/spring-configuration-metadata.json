@@ -1,0 +1,105 @@
+{
+  "groups": [
+    {
+      "name": "cos.client",
+      "type": "com.pjieyi.yioj.config.CosClientConfig",
+      "sourceType": "com.pjieyi.yioj.config.CosClientConfig"
+    },
+    {
+      "name": "oss.client",
+      "type": "com.pjieyi.yioj.config.OssClientConfig",
+      "sourceType": "com.pjieyi.yioj.config.OssClientConfig"
+    },
+    {
+      "name": "wx.open",
+      "type": "com.pjieyi.yioj.config.WxOpenConfig",
+      "sourceType": "com.pjieyi.yioj.config.WxOpenConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "cos.client.access-key",
+      "type": "java.lang.String",
+      "description": "accessKey",
+      "sourceType": "com.pjieyi.yioj.config.CosClientConfig"
+    },
+    {
+      "name": "cos.client.accessKey",
+      "type": "java.lang.String",
+      "description": "Description for cos.client.accessKey."
+    },
+    {
+      "name": "cos.client.bucket",
+      "type": "java.lang.String",
+      "description": "Description for cos.client.bucket.",
+      "sourceType": "com.pjieyi.yioj.config.CosClientConfig"
+    },
+    {
+      "name": "cos.client.region",
+      "type": "java.lang.String",
+      "description": "Description for cos.client.region.",
+      "sourceType": "com.pjieyi.yioj.config.CosClientConfig"
+    },
+    {
+      "name": "cos.client.secret-key",
+      "type": "java.lang.String",
+      "description": "secretKey",
+      "sourceType": "com.pjieyi.yioj.config.CosClientConfig"
+    },
+    {
+      "name": "cos.client.secretKey",
+      "type": "java.lang.String",
+      "description": "Description for cos.client.secretKey."
+    },
+    {
+      "name": "oss.client.access-key-id",
+      "type": "java.lang.String",
+      "description": "accessKey",
+      "sourceType": "com.pjieyi.yioj.config.OssClientConfig"
+    },
+    {
+      "name": "oss.client.access-key-secret",
+      "type": "java.lang.String",
+      "description": "secretKey",
+      "sourceType": "com.pjieyi.yioj.config.OssClientConfig"
+    },
+    {
+      "name": "oss.client.bucket",
+      "type": "java.lang.String",
+      "description": "桶名",
+      "sourceType": "com.pjieyi.yioj.config.OssClientConfig"
+    },
+    {
+      "name": "oss.client.endpoint",
+      "type": "java.lang.String",
+      "description": "区域",
+      "sourceType": "com.pjieyi.yioj.config.OssClientConfig"
+    },
+    {
+      "name": "wx.open.app-id",
+      "type": "java.lang.String",
+      "sourceType": "com.pjieyi.yioj.config.WxOpenConfig"
+    },
+    {
+      "name": "wx.open.app-secret",
+      "type": "java.lang.String",
+      "sourceType": "com.pjieyi.yioj.config.WxOpenConfig"
+    },
+    {
+      "name": "wx.open.appId",
+      "type": "java.lang.String",
+      "description": "Description for wx.open.appId."
+    },
+    {
+      "name": "wx.open.appSecret",
+      "type": "java.lang.String",
+      "description": "Description for wx.open.appSecret."
+    },
+    {
+      "name": "wx.open.wx-mp-service",
+      "type": "me.chanjar.weixin.mp.api.WxMpService",
+      "sourceType": "com.pjieyi.yioj.config.WxOpenConfig"
+    }
+  ],
+  "hints": []
+}
