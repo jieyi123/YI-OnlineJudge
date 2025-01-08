@@ -1,6 +1,5 @@
 package com.pjieyi.yioj.mapper;
 
-import com.pjieyi.yioj.model.entity.Post;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;

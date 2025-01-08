@@ -2,7 +2,7 @@ package com.pjieyi.yioj.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.pjieyi.yioj.model.dto.post.PostQueryRequest;
-import com.pjieyi.yioj.model.entity.Post;
+
 import javax.annotation.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
