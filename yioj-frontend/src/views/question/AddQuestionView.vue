@@ -1,18 +1,35 @@
 <template>
   <div id="addQuestionView">
     <h2>创建题目</h2>
-    <a-form :model="form" label-align="left"  auto-label-width>
+    <a-form :model="form" label-align="left" auto-label-width>
       <a-form-item field="title" label="标题">
-        <a-input v-model="form.title" placeholder="请输入标题" :style="{width:'500px'}"/>
+        <a-input
+          v-model="form.title"
+          placeholder="请输入标题"
+          :style="{ width: '500px' }"
+        />
       </a-form-item>
       <a-form-item field="tags" label="标签">
-        <a-input-tag v-model="form.tags" placeholder="请选择标签" allow-clear :style="{width:'500px'}" />
+        <a-input-tag
+          v-model="form.tags"
+          placeholder="请选择标签"
+          allow-clear
+          :style="{ width: '500px' }"
+        />
       </a-form-item>
       <a-form-item field="content" label="题目内容">
-        <MdEditor :value="form.content" :handle-change="onContentChange" :style="{width:'700px'}"/>
+        <MdEditor
+          :value="form.content"
+          :handle-change="onContentChange"
+          :style="{ width: '700px' }"
+        />
       </a-form-item>
       <a-form-item field="answer" label="答案">
-        <MdEditor :value="form.answer" :handle-change="onAnswerChange" :style="{width:'700px'}"/>
+        <MdEditor
+          :value="form.answer"
+          :handle-change="onAnswerChange"
+          :style="{ width: '700px' }"
+        />
       </a-form-item>
       <a-form-item label="判题配置" :content-flex="false" :merge-props="false">
         <a-space direction="vertical" style="min-width: 480px">
@@ -102,7 +119,11 @@ import { onMounted, ref } from "vue";
 import MdEditor from "@/components/MdEditor.vue";
 import message from "@arco-design/web-vue/es/message";
 import { useRoute } from "vue-router";
-import {addQuestionUsingPost, updateQuestionUsingPost,getQuestionVoByIdUsingGet} from "@/api/questionController";
+import {
+  addQuestionUsingPost,
+  updateQuestionUsingPost,
+  getQuestionVoByIdUsingGet, getQuestionByIdUsingGet,
+} from "@/api/questionController";
 
 const route = useRoute();
 // 如果页面地址包含 update，视为更新页面
@@ -114,9 +135,9 @@ let form = ref({
   answer: "",
   content: "",
   judgeConfig: {
-    memoryLimit: 1000,
-    stackLimit: 1000,
-    timeLimit: 1000,
+    memoryLimit: "",
+    stackLimit: "",
+    timeLimit: "",
   },
   judgeCase: [
     {
@@ -134,11 +155,12 @@ const loadData = async () => {
   if (!id) {
     return;
   }
-  const res = await getQuestionVoByIdUsingGet(
-    id as any
-  );
+  const res = await getQuestionByIdUsingGet({
+    id: id as any,
+  });
   if (res.data.code === 0) {
-    form.value = res.data as any;
+    form.value = res.data.data as any;
+    console.log(form.value.content);
     // json 转 js 对象
     if (!form.value.judgeCase) {
       form.value.judgeCase = [
@@ -177,18 +199,14 @@ const doSubmit = async () => {
   console.log(form.value);
   // 区分更新还是创建
   if (updatePage) {
-    const res = await updateQuestionUsingPost(
-      form.value
-    );
+    const res = await updateQuestionUsingPost(form.value);
     if (res.data.code === 0) {
       message.success("更新成功");
     } else {
       message.error("更新失败，" + res.data.message);
     }
   } else {
-    const res = await addQuestionUsingPost(
-      form.value
-    );
+    const res = await addQuestionUsingPost(form.value);
     if (res.data.code === 0) {
       message.success("创建成功");
     } else {

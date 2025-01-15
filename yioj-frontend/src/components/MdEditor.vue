@@ -22,25 +22,27 @@ const plugins = [
   highlight(),
   // Add more plugins here
 ];
-const value = ref("");
 const handleChange = (v: string) => {
-  value.value = v;
+  props.handleChange(v);
 };
 
 /**
  * 给组件指定初始值
  */
 const props = withDefaults(defineProps<Props>(), {
-  value: () => "",
+  value: () => {
+    return "";
+  },
   mode: () => "split",
   handleChange: (v: string) => {
     console.log(v);
   },
 });
 </script>
-<style scoped>
+<style>
 /** 隐藏编辑器中不需要的操作图标 **/
 .bytemd-toolbar-icon.bytemd-tippy.bytemd-tippy-right:last-child {
   display: none;
 }
+
 </style>

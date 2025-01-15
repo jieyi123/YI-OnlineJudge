@@ -11,6 +11,9 @@
         total,
       }"
     >
+      <template #createTime="{ record }">
+        {{ dayjs(record.createTime).format("YYYY-MM-DD") }}
+      </template>
       <template #optional="{ record }">
         <a-space>
           <a-button type="primary" @click="doUpdate(record)"> 修改</a-button>
@@ -31,6 +34,7 @@ import {
   listQuestionByPageUsingPost,
 } from "@/api/questionController";
 import Question = API.Question;
+import dayjs from "dayjs";
 
 const tableRef = ref();
 
@@ -105,7 +109,7 @@ const columns = [
   },
   {
     title: "创建时间",
-    dataIndex: "createTime",
+    slotName: "createTime",
   },
   {
     title: "操作",
