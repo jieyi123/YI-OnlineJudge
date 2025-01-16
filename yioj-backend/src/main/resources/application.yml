@@ -80,3 +80,7 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.pjieyi.yioj.controller
+
+# 代码沙箱配置
+codesandbox:
+  type: remote

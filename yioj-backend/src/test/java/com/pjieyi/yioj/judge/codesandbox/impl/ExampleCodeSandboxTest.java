@@ -1,17 +1,22 @@
 package com.pjieyi.yioj.judge.codesandbox.impl;
 
 import com.pjieyi.yioj.judge.codesandbox.CodeSandbox;
+import com.pjieyi.yioj.judge.codesandbox.CodeSandboxFactory;
 import com.pjieyi.yioj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.pjieyi.yioj.judge.codesandbox.model.ExecuteCodeResponse;
 import com.pjieyi.yioj.model.enums.QuestionSubmitLanguageEnum;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+import java.util.Scanner;
+@SpringBootTest
 class ExampleCodeSandboxTest {
+
+
+    @Value("${codesandbox.type:example}")
+    private String type;
 
     @Test
     void execute() {
@@ -24,4 +29,23 @@ class ExampleCodeSandboxTest {
         ExecuteCodeResponse execute = codeSandbox.execute(request);
         System.out.println(execute);
     }
+
+    @Test
+    void executeCodeByValue(){
+        CodeSandbox codeSandbox = CodeSandboxFactory.newInstance(type);
+        ExecuteCodeResponse execute = codeSandbox.execute(null);
+        System.out.println(type);
+    }
+
+    //根据type执行不同的代码环境
+    public static void main(String[] args) {
+        Scanner ac=new Scanner(System.in);
+        while (ac.hasNext()){
+            String type=ac.next();
+            CodeSandbox codeSandbox = CodeSandboxFactory.newInstance(type);
+            ExecuteCodeResponse execute = codeSandbox.execute(null);
+        }
+    }
+
+
 }
