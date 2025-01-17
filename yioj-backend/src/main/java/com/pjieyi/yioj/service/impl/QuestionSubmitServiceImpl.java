@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pjieyi.yioj.common.ErrorCode;
 import com.pjieyi.yioj.constant.CommonConstant;
 import com.pjieyi.yioj.exception.BusinessException;
+import com.pjieyi.yioj.judge.JudgeService;
 import com.pjieyi.yioj.model.dto.questionsubmit.QuestionSubmitAddRequest;
 import com.pjieyi.yioj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
 import com.pjieyi.yioj.model.entity.Question;
@@ -19,13 +20,16 @@ import com.pjieyi.yioj.service.QuestionSubmitService;
 import com.pjieyi.yioj.mapper.QuestionSubmitMapper;
 import com.pjieyi.yioj.service.UserService;
 import com.pjieyi.yioj.utils.SqlUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -34,6 +38,7 @@ import java.util.stream.Collectors;
 * @createDate 2025-01-07 16:47:20
 */
 @Service
+@Slf4j
 public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper, QuestionSubmit>
     implements QuestionSubmitService{
 
@@ -43,6 +48,10 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
 
     @Resource
     private UserService userService;
+
+    @Resource
+    @Lazy
+    private JudgeService judgeService;
 
     /**
      * 提交题目
@@ -80,6 +89,21 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         if (!save){
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "数据插入失败");
         }
+        Long questionSubmitId = questionSubmit.getId();
+        //调用判题
+        CompletableFuture<Void> future= CompletableFuture.runAsync(()->{
+            judgeService.doJudge(questionSubmitId);
+        }).handle((result,e)->{
+            if (e != null) {
+                // 处理异常
+                throw new BusinessException(ErrorCode.SYSTEM_ERROR,e.getMessage());
+            }else{
+                log.info("执行判断逻辑成功");
+            }
+            return null;
+        });
+        //等待异步任务完成，主线程才退出
+        future.join();
         return questionSubmit.getId();
     }
 
